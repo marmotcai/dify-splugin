@@ -1,0 +1,18 @@
+identity:
+  author: caijun
+  name: doc-reader
+  label:
+    en_US: doc-reader
+    zh_Hans: doc-reader
+    pt_BR: doc-reader
+  description:
+    en_US: Used to read documents from various sources  
+    zh_Hans: Used to read documents from various sources  
+    pt_BR: Used to read documents from various sources  
+  icon: icon.svg
+tools:
+  - tools/file-reader.yaml
+  - tools/minio-reader.yaml  
+extra:
+  python:
+    source: provider/doc-reader.py

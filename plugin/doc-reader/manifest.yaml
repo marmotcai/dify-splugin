@@ -1,0 +1,50 @@
+version: 0.0.1
+type: plugin
+author: caijun
+name: doc-reader
+label:
+  en_US: doc-reader
+  ja_JP: doc-reader
+  zh_Hans: doc-reader
+  pt_BR: doc-reader
+description:
+  en_US: 'Used to read documents from various sources  '
+  ja_JP: 'Used to read documents from various sources  '
+  zh_Hans: 'Used to read documents from various sources  '
+  pt_BR: 'Used to read documents from various sources  '
+icon: icon.svg
+resource:
+  memory: 268435456
+  permission:
+    tool:
+      enabled: true
+    model:
+      enabled: true
+      llm: true
+      text_embedding: true
+      rerank: false
+      tts: false
+      speech2text: false
+      moderation: false
+    endpoint:
+      enabled: true
+    app:
+      enabled: true
+    storage:
+      enabled: true
+      size: 1048576
+plugins:
+  tools:
+    - provider/doc-reader.yaml
+meta:
+  version: 0.0.1
+  arch:
+    - amd64
+    - arm64
+  runner:
+    language: python
+    version: "3.12"
+    entrypoint: main
+created_at: 2025-03-28T15:28:26.822083867+08:00
+privacy: PRIVACY.md
+verified: false

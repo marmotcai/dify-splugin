@@ -1,0 +1,67 @@
+identity:
+  name: minio-reader
+  author: caijun
+  label:
+    en_US: MinIO Document Reader
+    zh_Hans: MinIO 文档读取器
+description:
+    human:
+      en_US: A tool to read and process documents stored in MinIO object storage
+      zh_Hans: 用于读取和处理存储在 MinIO 对象存储中的文档的工具
+    llm: A utility for reading and processing documents from MinIO object storage service
+parameters:
+  - name: endpoint_url
+    type: string
+    required: true
+    label:
+      en_US: MinIO Endpoint URL
+      zh_Hans: MinIO 地址
+      pt_BR: URL do endpoint MinIO
+    human_description:
+      en_US: The endpoint URL for your MinIO server
+      zh_Hans: MinIO服务器的URL地址
+      pt_BR: URL do endpoint do servidor MinIO
+    llm_description: The endpoint URL for connecting to MinIO server
+    form: llm
+  - name: bucket
+    type: string
+    required: true
+    label:
+      en_US: Bucket Name
+      zh_Hans: 存储桶名称
+      pt_BR: Nome do Bucket
+    human_description:
+      en_US: The name of the MinIO bucket to read documents from
+      zh_Hans: 用于读取文档的MinIO存储桶名称
+      pt_BR: Nome do bucket MinIO para ler documentos
+    llm_description: The MinIO bucket name where documents are stored
+    form: llm
+  - name: aws_access_id
+    type: string
+    required: false
+    label:
+      en_US: Access Key ID
+      zh_Hans: 访问密钥ID
+      pt_BR: ID da Chave de Acesso
+    human_description:
+      en_US: MinIO access key ID for authentication
+      zh_Hans: MinIO访问验证的密钥ID
+      pt_BR: ID da chave de acesso MinIO para autenticação
+    llm_description: Access key ID for MinIO authentication
+    form: llm
+  - name: aws_access_secret
+    type: string
+    required: false
+    label:
+      en_US: Secret Access Key
+      zh_Hans: 访问密钥
+      pt_BR: Chave de Acesso Secreta
+    human_description:
+      en_US: MinIO secret access key for authentication
+      zh_Hans: MinIO访问验证的密钥
+      pt_BR: Chave de acesso secreta MinIO para autenticação
+    llm_description: Secret access key for MinIO authentication
+    form: llm
+extra:
+  python:
+    source: tools/minio-reader.py

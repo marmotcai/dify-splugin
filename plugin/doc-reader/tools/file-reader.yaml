@@ -1,0 +1,27 @@
+identity:
+  name: file-reader
+  author: caijun
+  label:
+    en_US: file-reader
+    zh_Hans: 文件读取器
+description:
+      human:
+        en_US: File Reader
+        zh_Hans: 文件读取器
+        pt_BR: Leitor de Arquivos
+      llm: A tool for reading and processing documents from different file sources.
+parameters:
+  - name: input
+    type: string
+    required: true
+    label:
+      en_US: input
+      zh_Hans: 输入
+    human_description:
+      en_US: input
+      zh_Hans: 输入
+    llm_description: input.
+    form: llm
+extra:
+  python:
+    source: tools/file-reader.py
