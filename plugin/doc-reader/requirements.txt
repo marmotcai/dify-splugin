@@ -1,3 +1,5 @@
 dify_plugin>=0.0.1b44
 llama-index-readers-file
+llama-index-readers-minio
+docx2txt
 platformdirs

@@ -12,10 +12,16 @@ from llama_index.readers.file import (
 from pydantic import BaseModel
 
 class ToolParameters(BaseModel):
-    samples: list[File]
+    samples: str
 
+mime_type_map = {
+    "PDF": "application/pdf",
+    "JSON": "application/json",
+    "MD": "text/markdown",
+    "TXT": "text/plain",
+}
 
-class FileReaderTool(Tool):
+class RouterTool(Tool):
     def _invoke(self, tool_parameters: dict[str, Any]) -> Generator[ToolInvokeMessage]:
         if tool_parameters.get("samples") is None:
             raise ValueError("samples is required")
@@ -31,9 +37,16 @@ class FileReaderTool(Tool):
             input_files = [samples], file_extractor=file_extractor
         ).load_data()
 
-        # 将文档列表转换为字典格式
-        docs_dict = {
-            "documents": [doc.dict() for doc in documents],
-            "total": len(documents)
-        }
-        yield self.create_json_message(docs_dict)
+        texts = "---".join([doc.text for doc in documents])
+        yield self.create_text_message(texts)
+
+        handled_docs = [
+            {"text": doc.text, "metadata": doc.metadata} for doc in documents
+        ]
+        yield self.create_json_message({samples: handled_docs})
+        yield self.create_blob_message(
+            texts.encode(),
+            meta={
+                "mime_type": mime_type_map["PDF"],
+            },
+        )

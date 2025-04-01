@@ -11,6 +11,7 @@ identity:
     pt_BR: Used to read documents from various sources  
   icon: icon.svg
 tools:
+  - tools/router.yaml
   - tools/file-reader.yaml
   - tools/minio-reader.yaml  
 extra:

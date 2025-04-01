@@ -1,18 +1,18 @@
 identity:
-  name: file-reader
+  name: router
   author: caijun
   label:
-    en_US: file-reader
-    zh_Hans: 文件读取器
+    en_US: router
+    zh_Hans: 读取路由器
 description:
       human:
-        en_US: File Reader
-        zh_Hans: 文件读取器
+        en_US: router
+        zh_Hans: 读取路由器
         pt_BR: Leitor de Arquivos
       llm: A tool for reading and processing documents from different file sources.
 parameters:
   - name: samples
-    type: files
+    type: string
     required: true
     label:
       en_US: samples
@@ -24,4 +24,4 @@ parameters:
     form: llm
 extra:
   python:
-    source: tools/file-reader.py
+    source: tools/router.py
