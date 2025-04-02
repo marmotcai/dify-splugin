@@ -3,13 +3,24 @@ identity:
   author: caijun
   label:
     en_US: MinIO Document Reader
-    zh_Hans: MinIO 文档读取器
+    zh_Hans: 文档读取器(minio)
 description:
     human:
       en_US: A tool to read and process documents stored in MinIO object storage
       zh_Hans: 用于读取和处理存储在 MinIO 对象存储中的文档的工具
     llm: A utility for reading and processing documents from MinIO object storage service
 parameters:
+  - name: key
+    type: string
+    required: false
+    label:
+      en_US: The name of the file
+      zh_Hans: 文件的名称
+    human_description:
+      en_US: The name of the file, if empty, facilitates the entire bucket
+      zh_Hans: 文件的名称,如果为空则便利整个桶
+    llm_description: The name of the file, if empty, facilitates the entire bucket
+    form: llm
   - name: endpoint_url
     type: string
     required: true
@@ -36,7 +47,7 @@ parameters:
       pt_BR: Nome do bucket MinIO para ler documentos
     llm_description: The MinIO bucket name where documents are stored
     form: llm
-  - name: aws_access_id
+  - name: minio_access_key
     type: string
     required: false
     label:
@@ -49,7 +60,7 @@ parameters:
       pt_BR: ID da chave de acesso MinIO para autenticação
     llm_description: Access key ID for MinIO authentication
     form: llm
-  - name: aws_access_secret
+  - name: minio_secret_key
     type: string
     required: false
     label:
@@ -62,6 +73,20 @@ parameters:
       pt_BR: Chave de acesso secreta MinIO para autenticação
     llm_description: Secret access key for MinIO authentication
     form: llm
+  - name: minio_secure
+    type: boolean
+    default: false
+    required: false
+    label:
+      en_US: Use HTTPS
+      zh_Hans: 使用HTTPS
+      pt_BR: Usar HTTPS
+    human_description:
+      en_US: Whether to use HTTPS for MinIO connection
+      zh_Hans: 是否使用HTTPS连接MinIO
+      pt_BR: Se deve usar HTTPS para conexão com o MinIO
+    form: form
+  
 extra:
   python:
     source: tools/minio-reader.py
