@@ -12,7 +12,7 @@ description:
       llm: A tool for reading and processing documents from different file sources.
 parameters:
   - name: samples
-    type: files
+    type: string
     required: true
     label:
       en_US: samples

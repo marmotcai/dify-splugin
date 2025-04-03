@@ -28,25 +28,5 @@ class RouterTool(Tool):
         
         params = ToolParameters(**tool_parameters)
         samples = params.samples
-
-        # PDF Reader with `SimpleDirectoryReader`
-        parser = PDFReader()  
-
-        file_extractor = {".pdf": parser}
-        documents = SimpleDirectoryReader(
-            input_files = [samples], file_extractor=file_extractor
-        ).load_data()
-
-        texts = "---".join([doc.text for doc in documents])
-        yield self.create_text_message(texts)
-
-        handled_docs = [
-            {"text": doc.text, "metadata": doc.metadata} for doc in documents
-        ]
-        yield self.create_json_message({samples: handled_docs})
-        yield self.create_blob_message(
-            texts.encode(),
-            meta={
-                "mime_type": mime_type_map["PDF"],
-            },
-        )
+        
+        yield self.create_text_message(samples)

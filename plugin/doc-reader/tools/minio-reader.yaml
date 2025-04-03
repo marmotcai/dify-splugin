@@ -86,6 +86,33 @@ parameters:
       zh_Hans: 是否使用HTTPS连接MinIO
       pt_BR: Se deve usar HTTPS para conexão com o MinIO
     form: form
+  - name: ollama_endpoint
+    type: string
+    required: true
+    label:
+      en_US: Ollama Endpoint URL
+      zh_Hans: Ollama 地址
+      pt_BR: URL do endpoint Ollama
+    human_description:
+      en_US: The endpoint URL for your Ollama server
+      zh_Hans: Ollama服务器的URL地址
+      pt_BR: URL do endpoint do servidor Ollama
+    llm_description: The endpoint URL for connecting to Ollama server
+    form: llm
+  - name: ollama_model_name
+    type: string
+    required: true
+    label:
+      en_US: Ollama mode name
+      zh_Hans: Ollama 模型名称
+      pt_BR: Ollama mode name
+    human_description:
+      en_US: The mode name for your Ollama server
+      zh_Hans: Ollama 模型名称
+      pt_BR: The mode name for your Ollama server
+    llm_description: The mode name for your Ollama server
+    form: llm
+    
   
 extra:
   python:

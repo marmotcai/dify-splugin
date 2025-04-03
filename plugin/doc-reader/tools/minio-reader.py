@@ -10,12 +10,14 @@ from llama_index.readers.minio import (
 
 from pydantic import BaseModel
 class ToolParameters(BaseModel):
+    key: str
     endpoint_url: str
     bucket: str
     minio_access_key: str
     minio_secret_key: str
     minio_secure: bool
-    key: str
+    ollama_endpoint: str
+    ollama_model_name: str
 
 mime_type_map = {
     "PDF": "application/pdf",
@@ -38,9 +40,21 @@ class MinioReaderTool(Tool):
         )    # Read the file
         
         documents = reader.load_data()
+        ollama_embedding = None
+
+        if len(params.ollama_endpoint) > 0:
+            from llama_index.embeddings.ollama import OllamaEmbedding
+            ollama_embedding = OllamaEmbedding(
+                model_name = params.ollama_model_name,
+                base_url = params.ollama_endpoint,
+                ollama_additional_kwargs={"mirostat": 0},
+            )
+
+            pass
 
         result = [
-            {"content": doc.text, "metadata": doc.metadata} for doc in documents
+            {"content": doc.text, "metadata": doc.metadata, 
+             "embedding": ollama_embedding.get_query_embedding(doc.text) if ollama_embedding else ""} for doc in documents
         ]
 
         if params.key is None or params.key == "":

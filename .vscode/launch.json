@@ -22,6 +22,17 @@
             "env": {
                 "GEVENT_SUPPORT": "True"
             }
+        },
+        {
+            "name": "Python: 调试插件embedding",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "main",
+            "cwd": "${workspaceFolder}/plugin/embedding",
+            "jinja": true,
+            "env": {
+                "GEVENT_SUPPORT": "True"
+            }
         }
     ]
 }

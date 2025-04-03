@@ -12,8 +12,7 @@ from llama_index.readers.file import (
 from pydantic import BaseModel
 
 class ToolParameters(BaseModel):
-    samples: list[File]
-
+    samples: str
 
 class FileReaderTool(Tool):
     def _invoke(self, tool_parameters: dict[str, Any]) -> Generator[ToolInvokeMessage]:
@@ -23,17 +22,16 @@ class FileReaderTool(Tool):
         params = ToolParameters(**tool_parameters)
         samples = params.samples
 
-        # PDF Reader with `SimpleDirectoryReader`
-        parser = PDFReader()  
-
-        file_extractor = {".pdf": parser}
         documents = SimpleDirectoryReader(
-            input_files = [samples], file_extractor=file_extractor
+            input_files = [samples], file_extractor=None
         ).load_data()
 
-        # 将文档列表转换为字典格式
-        docs_dict = {
-            "documents": [doc.dict() for doc in documents],
-            "total": len(documents)
-        }
-        yield self.create_json_message(docs_dict)
+        result = [
+            {"content": doc.text, "metadata": doc.metadata} for doc in documents
+        ]
+
+        if samples is None or samples == "":
+            # If no key is provided, return all documents
+            yield self.create_json_message({"documents": result})
+        else:
+            yield self.create_json_message({samples: result})
