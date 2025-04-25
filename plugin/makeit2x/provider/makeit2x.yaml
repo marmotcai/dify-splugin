@@ -1,0 +1,19 @@
+identity:
+  author: caijun
+  name: makeit2x
+  label:
+    en_US: makeit2x
+    zh_Hans: makeit2x
+    pt_BR: makeit2x
+  description:
+    en_US: Convert documents to a certain format
+    zh_Hans: Convert documents to a certain format
+    pt_BR: Convert documents to a certain format
+  icon: icon.svg
+tools:
+  - tools/makeit2x.yaml
+  - tools/textsplitter.yaml
+  - tools/reader.yaml
+extra:
+  python:
+    source: provider/makeit2x.py

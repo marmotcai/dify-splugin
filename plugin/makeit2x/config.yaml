@@ -1,0 +1,7 @@
+s3:
+  root: "/"
+  bucket: "swdocument"
+  endpoint: "http://10.213.84.8:30011"
+  access_key_id: "3ca6dhXTODdSpJs8UCtX"
+  secret_access_key: "ZJalQthQFtnO9xbOYS42jrKTG9zso0bv6WTDJpOG"
+  region: "us-east-1"

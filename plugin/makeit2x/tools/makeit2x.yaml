@@ -1,0 +1,40 @@
+identity:
+  name: makeit2x
+  author: caijun
+  label:
+    en_US: makeit2x
+    zh_Hans: makeit2x
+    pt_BR: makeit2x
+description:
+  human:
+    en_US: Convert documents to a certain format
+    zh_Hans: 将文档转换为特定格式
+    pt_BR: Convert documents to a certain format
+  llm: Convert documents to a certain format
+parameters:
+  - name: samples
+    type: string
+    required: true
+    label:
+      en_US: samples
+      zh_Hans: 输入样本
+    human_description:
+      en_US: samples
+      zh_Hans: 输入样本
+    llm_description: samples.
+    form: llm
+  - name: outfmt
+    type: string
+    default: markdown
+    required: true
+    label:
+      en_US: out format
+      zh_Hans: 输出格式
+    human_description:
+      en_US: out format
+      zh_Hans: 输出格式
+    llm_description: out format.
+    form: llm    
+extra:
+  python:
+    source: tools/makeit2x.py

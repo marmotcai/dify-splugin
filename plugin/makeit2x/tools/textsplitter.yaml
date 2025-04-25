@@ -1,0 +1,40 @@
+identity:
+  name: textsplitter
+  author: caijun
+  label:
+    en_US: textsplitter
+    zh_Hans: textsplitter
+    pt_BR: textsplitter
+description:
+  human:
+    en_US: text splitter
+    zh_Hans: 标题文本拆分器
+    pt_BR: text splitter
+  llm: text splitter
+parameters:
+  - name: samples
+    type: string
+    required: true
+    label:
+      en_US: samples
+      zh_Hans: 输入样本
+    human_description:
+      en_US: samples
+      zh_Hans: 输入样本
+    llm_description: samples.
+    form: llm
+  - name: infmt
+    type: string
+    default: markdown
+    required: true
+    label:
+      en_US: in format
+      zh_Hans: 输入格式
+    human_description:
+      en_US: in format
+      zh_Hans: 输入格式
+    llm_description: in format.
+    form: llm        
+extra:
+  python:
+    source: tools/textsplitter.py

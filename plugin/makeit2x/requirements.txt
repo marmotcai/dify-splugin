@@ -1,0 +1,8 @@
+dify_plugin>=0.1.0,<0.2.0
+nltk
+markitdown[all]
+llama_index
+llama-index-readers-file
+llama-index-readers-opendal
+langchain-text-splitters
+opendal>=0.45.18

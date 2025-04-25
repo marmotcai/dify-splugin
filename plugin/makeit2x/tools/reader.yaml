@@ -1,0 +1,27 @@
+identity:
+  name: reader
+  author: caijun
+  label:
+    en_US: reader
+    zh_Hans: 文档读取器
+description:
+      human:
+        en_US: Reader
+        zh_Hans: 文档读取器
+        pt_BR: Leitor de Arquivos
+      llm: A tool for reading and processing documents from different file sources.
+parameters:
+  - name: samples
+    type: string
+    required: true
+    label:
+      en_US: samples
+      zh_Hans: 样本集
+    human_description:
+      en_US: samples
+      zh_Hans: 样本集
+    llm_description: samples.
+    form: llm
+extra:
+  python:
+    source: tools/reader.py
