@@ -57,18 +57,28 @@ config = {}
 if os.path.exists(config_path):
     with open(config_path, "r") as config_file:
         config = yaml.safe_load(config_file)
+doclibrarys = config.get("doclibrarys", {})
 
-op_s3 = opendal.Operator(
-    "s3",
-    root=config.get("s3", {}).get("root", "/"),
-    bucket=config.get("s3", {}).get("bucket", "document"),
-    endpoint=config.get("s3", {}).get("endpoint", "http://localhost:9001"),
-    access_key_id=config.get("s3", {}).get("access_key_id", "admin"),
-    secret_access_key=config.get("s3", {}).get("secret_access_key", "admin"),
-    region=config.get("s3", {}).get("region", "us-east-1"),
-)
+for key, value in doclibrarys.items():
+    scheme = value.get("scheme", None)
+    if scheme is None:
+        continue
+    if scheme == "s3":
+        operator = opendal.Operator(
+                            scheme,
+                            root=value.get("root", "/"),
+                            bucket=value.get("bucket", "document"),
+                            endpoint=value.get("endpoint", "http://localhost:9001"),
+                            access_key_id=value.get("access_key_id", "admin"),
+                            secret_access_key=value.get("secret_access_key", "admin"),
+                            region=value.get("region", "us-east-1"),
+                        )
+    elif scheme == "fs":
+        operator = opendal.Operator(scheme, root=value.get("root", "/root/data"))
+    elif scheme == "http" or scheme == "ftp":
+        operator = opendal.Operator(scheme, endpoint=value.get("endpoint", "localhost:80"))
 
-op_fs = opendal.Operator("fs", root=config.get("fs", {}).get("root", "/root/data"))
+    value["operator"] = operator
 
 def download_file_from_opendal(op: Any, temp_dir: str, path: str) -> str:
     """Download file from OpenDAL."""
@@ -121,6 +131,7 @@ import requests
 
 class ToolParameters(BaseModel):
     samples: str
+    doclibrary: str = "fs"
 
 class FileReaderTool(Tool):
     def _invoke(self, tool_parameters: dict[str, Any]) -> Generator[ToolInvokeMessage]:
@@ -129,23 +140,30 @@ class FileReaderTool(Tool):
         
         params = ToolParameters(**tool_parameters)
         samples = params.samples
+        doclibrary = params.doclibrary or None
 
-        documents = []
-        if os.path.isfile(samples):
-            # If the path is a local file, load it directly
-            documents = load_data(op_fs, samples)
-        elif samples.startswith("http://") or samples.startswith("https://"):
-            # If the path is an HTTP/HTTPS URL, download it first
-            documents = load_data_from_http(samples)
+        operator = None
+        if not doclibrary or doclibrary not in doclibrary:
+            doclibrary = list(doclibrarys)[0]
+            operator = doclibrarys[doclibrary]
         else:
-            documents = load_data(op_s3, samples)
+            if doclibrary not in doclibrarys:
+                raise ValueError(f"doclibrary {doclibrary} not found")
+            operator = doclibrarys[doclibrary]
+        operator = operator.get("operator") or None
+        if operator is None:
+            raise ValueError(f"doclibrary {doclibrary} not found operator")
+        documents = load_data(operator, samples)
 
-        result = [
-            {"content": doc.text, "metadata": doc.metadata} for doc in documents
+        result_content = "\n".join(doc.text for doc in documents)
+        yield self.create_text_message(result_content)
+
+        result_json = [
+            {"content": doc.text, "page_label": doc.metadata["page_label"]} for doc in documents
         ]
 
         if samples is None or samples == "":
             # If no key is provided, return all documents
-            yield self.create_json_message({"documents": result})
+            yield self.create_json_message({"documents": result_json})
         else:
-            yield self.create_json_message({samples: result})
+            yield self.create_json_message({samples: result_json})

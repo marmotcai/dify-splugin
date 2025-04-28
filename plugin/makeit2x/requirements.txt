@@ -6,3 +6,4 @@ llama-index-readers-file
 llama-index-readers-opendal
 langchain-text-splitters
 opendal>=0.45.18
+docx2txt>=0.9

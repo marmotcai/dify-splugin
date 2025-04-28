@@ -1,7 +1,15 @@
-s3:
-  root: "/"
-  bucket: "swdocument"
-  endpoint: "http://10.213.84.8:30011"
-  access_key_id: "3ca6dhXTODdSpJs8UCtX"
-  secret_access_key: "ZJalQthQFtnO9xbOYS42jrKTG9zso0bv6WTDJpOG"
-  region: "us-east-1"
+doclibrarys:
+  s3_nas:
+    scheme: s3
+    root: "/"
+    bucket: "swdocument"
+    endpoint: "http://10.213.84.8:30011"
+    access_key_id: "3ca6dhXTODdSpJs8UCtX"
+    secret_access_key: "ZJalQthQFtnO9xbOYS42jrKTG9zso0bv6WTDJpOG"
+    region: "us-east-1"
+  http_nas:
+    scheme: http
+    endpoint: "http://10.213.84.8"
+  fs_local:
+    scheme: fs
+    root: "/root/data"

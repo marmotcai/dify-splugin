@@ -22,6 +22,17 @@ parameters:
       zh_Hans: 样本集
     llm_description: samples.
     form: llm
+  - name: doclibrary
+    type: string
+    required: false
+    label:
+      en_US: doc library
+      zh_Hans: 文档库
+    human_description:
+      en_US: doc library
+      zh_Hans: 文档库
+    llm_description: doc library.
+    form: llm    
 extra:
   python:
     source: tools/reader.py
